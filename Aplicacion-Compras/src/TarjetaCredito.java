@@ -19,7 +19,7 @@ public class TarjetaCredito {
             limite -= compra.getMonto();
             return true;
         } else {
-            System.out.println("Saldo insuficiente para esta compra.");
+            System.out.println("Saldo insuficiente para esta compra");
             return false;
         }
     }
