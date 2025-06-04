@@ -6,9 +6,9 @@ public class aplicacionBancaria {
 
     public static void main(String[] args) {
 
-        String nombre = "Edson Castañeda";
+        String nombre = "Emiliano Castañeda";
         String tipoCuenta = "Ahorros";
-        double saldo = 1500000.00;
+        double saldo = 1800000.00;
 
         Scanner teclado = new Scanner(System.in);
 
