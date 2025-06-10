@@ -26,13 +26,13 @@ public class Serie {
 
     @Override
     public String toString() {
-        return "titulo='" + titulo + '\'' +
-                ", totalDeTemporadas=" + totalDeTemporadas +
-                ", evaluacion=" + evaluacion +
-                ", poster='" + poster + '\'' +
-                ", genero=" + genero +
-                ", actores='" + actores + '\'' +
-                ", sinopsis='" + sinopsis + '\'';
+        return "genero = '" + genero + '\'' +
+                ", titulo = '" + titulo + '\'' +
+                ", totalDeTemporadas = " + totalDeTemporadas +
+                ", evaluacion = " + evaluacion +
+                ", poster = '" + poster + '\'' +
+                ", actores = '" + actores + '\'' +
+                ", sinopsis = '" + sinopsis + '\'';
     }
 
     public String getTitulo() {

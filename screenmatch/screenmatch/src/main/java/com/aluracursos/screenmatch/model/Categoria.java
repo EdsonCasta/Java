@@ -4,7 +4,7 @@ public enum Categoria {
 
     ACCION("Action"),
     ROMANCE("Romance"),
-    COMEDIA("Comedi"),
+    COMEDIA("Comedy"),
     DRAMA("Drama"),
     CRIMEN("Crime");
 
