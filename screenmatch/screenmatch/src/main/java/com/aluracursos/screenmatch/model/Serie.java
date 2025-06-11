@@ -1,6 +1,6 @@
 package com.aluracursos.screenmatch.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.aluracursos.screenmatch.service.ConsultaGemini;
 
 import java.util.OptionalDouble;
 
@@ -14,14 +14,14 @@ public class Serie {
     private String actores;
     private String sinopsis;
 
-    public Serie(DatosSerie datosSerie){
+    public Serie(DatosSerie datosSerie, ConsultaGemini consultaGemini){
         this.titulo = datosSerie.titulo();
         this.totalDeTemporadas = datosSerie.totalDeTemporadas();
         this.evaluacion = OptionalDouble.of(Double.valueOf(datosSerie.evaluacion())).orElse(0);
         this.poster = datosSerie.poster();
         this.genero = Categoria.fromString(datosSerie.genero().split(",")[0].trim());
         this.actores = datosSerie.actores();
-        this.sinopsis = datosSerie.sinopsis();
+        this.sinopsis = consultaGemini.obtenerTraduccion(datosSerie.sinopsis());
     }
 
     @Override

@@ -3,8 +3,10 @@ package com.aluracursos.screenmatch.principal;
 import com.aluracursos.screenmatch.model.DatosSerie;
 import com.aluracursos.screenmatch.model.DatosTemporadas;
 import com.aluracursos.screenmatch.model.Serie;
+import com.aluracursos.screenmatch.service.ConsultaGemini;
 import com.aluracursos.screenmatch.service.ConsumoAPI;
 import com.aluracursos.screenmatch.service.ConvierteDatos;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+@Component
 public class Principal {
 
         private Scanner scanner = new Scanner(System.in);
@@ -21,7 +24,13 @@ public class Principal {
         private  final String API_KEY = "&apikey=2d783b4f";
 
         private ConvierteDatos conversor = new ConvierteDatos();
+        private final ConsultaGemini consultaGemini;
+
         private List<DatosSerie> datosSeries = new ArrayList<>();
+
+    public Principal(ConsultaGemini consultaGemini) {
+        this.consultaGemini = consultaGemini;
+    }
 
     public void mostrarElMenu(){
 
@@ -85,7 +94,7 @@ public class Principal {
     private void mostrarSeriesBuscadas() {
         List<Serie> series = new ArrayList<>();
         series = datosSeries.stream()
-                .map(d -> new Serie(d))
+                .map(d -> new Serie(d, consultaGemini))
                 .collect(Collectors.toList());
 
         series.stream()
