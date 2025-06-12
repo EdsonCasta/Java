@@ -1,1 +1,5 @@
-/src/main/resources/application.properties
+# Ignorar archivos generados automáticamente
+screenmatch/target/
+
+# Ignorar carpetas de compilación de Maven
+target/
