@@ -1,1 +1,7 @@
-screenmatch/screenmatch/src/main/resources/application.properties
+# Ignorar archivo con claves sensibles
+screenmatch/src/main/resources/application.properties
+
+# Ignorar archivos generados automáticamente
+screenmatch/target/
+
+git add .gitignore
