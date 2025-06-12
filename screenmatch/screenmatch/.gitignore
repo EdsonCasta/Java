@@ -3,5 +3,3 @@ screenmatch/src/main/resources/application.properties
 
 # Ignorar archivos generados automáticamente
 screenmatch/target/
-
-git add .gitignore
