@@ -3,6 +3,7 @@ package com.aluracursos.screenmatch.principal;
 import com.aluracursos.screenmatch.model.DatosSerie;
 import com.aluracursos.screenmatch.model.DatosTemporadas;
 import com.aluracursos.screenmatch.model.Serie;
+import com.aluracursos.screenmatch.repository.SerieRepository;
 import com.aluracursos.screenmatch.service.ConsultaGemini;
 import com.aluracursos.screenmatch.service.ConsumoAPI;
 import com.aluracursos.screenmatch.service.ConvierteDatos;
@@ -25,11 +26,13 @@ public class Principal {
 
         private ConvierteDatos conversor = new ConvierteDatos();
         private final ConsultaGemini consultaGemini;
+        private final SerieRepository repository;
 
         private List<DatosSerie> datosSeries = new ArrayList<>();
 
-    public Principal(ConsultaGemini consultaGemini) {
+    public Principal(ConsultaGemini consultaGemini, SerieRepository repository) {
         this.consultaGemini = consultaGemini;
+        this.repository = repository;
     }
 
     public void mostrarElMenu(){
@@ -56,6 +59,7 @@ public class Principal {
                     break;
                 case 3:
                     mostrarSeriesBuscadas();
+                    break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
                     break;
@@ -87,8 +91,11 @@ public class Principal {
     }
     private void buscarSerieWeb() {
         DatosSerie datos = getDatosSerie();
-        datosSeries.add(datos);
-        System.out.println(datos);
+//        datosSeries.add(datos);
+        Serie serie = new Serie(datos, consultaGemini);
+        repository.save(serie);
+        System.out.println("Serie guardada en la base de datos: ");
+        System.out.println(serie);
     }
 
     private void mostrarSeriesBuscadas() {

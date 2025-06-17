@@ -3,17 +3,16 @@ package com.aluracursos.screenmatch.model;
 import com.aluracursos.screenmatch.service.ConsultaGemini;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.OptionalDouble;
 
 @Entity
-@Table(name = "Series")
-
-
+@Table(name = "series")
 public class Serie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
     @Column(unique = true)
     private String titulo;
     private Integer totalDeTemporadas;
@@ -23,6 +22,9 @@ public class Serie {
     private Categoria genero;
     private String actores;
     private String sinopsis;
+
+    @Transient
+    private List<Episodio> episodios;
 
     public Serie(DatosSerie datosSerie, ConsultaGemini consultaGemini){
         this.titulo = datosSerie.titulo();
@@ -46,11 +48,11 @@ public class Serie {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitulo() {
