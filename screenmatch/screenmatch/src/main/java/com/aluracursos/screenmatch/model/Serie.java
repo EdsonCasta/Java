@@ -3,14 +3,14 @@ package com.aluracursos.screenmatch.model;
 import com.aluracursos.screenmatch.service.ConsultaGemini;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
 @Entity
 @Table(name = "series")
 public class Serie {
-
-    @Id
+        @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(unique = true)
@@ -23,8 +23,8 @@ public class Serie {
     private String actores;
     private String sinopsis;
 
-    @OneToMany(mappedBy = "serie")
-    private List<Episodio> episodios;
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
+    private List<Episodio> episodios = new ArrayList<>();
 
     public Serie (){}
 
@@ -47,6 +47,14 @@ public class Serie {
                 ", poster = '" + poster + '\'' +
                 ", actores = '" + actores + '\'' +
                 ", sinopsis = '" + sinopsis + '\'';
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
     }
 
     public long getId() {

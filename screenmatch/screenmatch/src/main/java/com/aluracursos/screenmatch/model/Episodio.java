@@ -7,9 +7,7 @@ import java.time.format.DateTimeParseException;
 
 @Entity
 @Table(name = "episodios")
-
 public class Episodio {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,6 +35,14 @@ public class Episodio {
         } catch (DateTimeParseException e) {
             this.fechaDeLanzamiento = null;
         }
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Serie getSerie() {
