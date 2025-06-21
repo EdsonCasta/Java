@@ -112,7 +112,7 @@ public class Principal {
         Serie serie = new Serie(datos, consultaGemini);
         repository.save(serie);
         System.out.println("Serie guardada en la base de datos: ");
-        System.out.println(datos);
+        System.out.println(serie);
     }
 
     private void mostrarSeriesBuscadas() {
