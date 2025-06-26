@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class Principal {
 
-        private Scanner scanner = new Scanner(System.in);
+        private Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
         private ConsumoAPI consumoAPI = new ConsumoAPI();
 
         private final String URL_BASE = "https://www.omdbapi.com/?t=";
@@ -71,6 +71,7 @@ public class Principal {
                     break;
                 case 7:
                     filtrarSeriesPorTemporadaYEvalucion();
+                    break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
                     break;
@@ -88,7 +89,7 @@ public class Principal {
         System.out.println("¿Evaluación apartir de cuál valor? ");
         var evaluacion = scanner.nextDouble();
         scanner.nextLine();
-        List<Serie> filtroSeries = repository.findByTotalDeTemporadasLessThanEqualAndEvaluacionGreaterThanEqual(totalTemporadas, evaluacion);
+        List<Serie> filtroSeries = repository.seriesPorTemporadaYEvaluacion(totalTemporadas, evaluacion);
         System.out.println("*** Series filtradas ***");
         filtroSeries.forEach(s ->
                 System.out.println(s.getTitulo() + "  - evaluacion: " + s.getEvaluacion()));
