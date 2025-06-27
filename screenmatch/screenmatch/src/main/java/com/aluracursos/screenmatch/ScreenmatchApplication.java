@@ -5,6 +5,7 @@ import com.aluracursos.screenmatch.model.DatosSerie;
 import com.aluracursos.screenmatch.model.DatosTemporadas;
 import com.aluracursos.screenmatch.principal.EjemploStreams;
 import com.aluracursos.screenmatch.principal.Principal;
+import com.aluracursos.screenmatch.repository.SerieRepository;
 import com.aluracursos.screenmatch.service.ConsumoAPI;
 import com.aluracursos.screenmatch.service.ConvierteDatos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,14 @@ import java.util.List;
 public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Autowired
-	private Principal principal;
-
+	private SerieRepository repository;
 	public static void main(String[] args) {
 		SpringApplication.run(ScreenmatchApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Primer proyecto Spring sin Web");
+		Principal principal = new Principal(repository);
 		principal.mostrarElMenu();
 
 		/*

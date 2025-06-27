@@ -24,11 +24,11 @@ public class Serie {
     private String sinopsis;
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Episodio> episodios = new ArrayList<>();
+    private List<Episodio> episodios;
 
     public Serie (){}
 
-    public Serie(DatosSerie datosSerie, ConsultaGemini consultaGemini){
+    public Serie(DatosSerie datosSerie){
         this.titulo = datosSerie.titulo();
         this.totalDeTemporadas = datosSerie.totalDeTemporadas();
         this.evaluacion = OptionalDouble.of(Double.valueOf(datosSerie.evaluacion())).orElse(0);
@@ -47,8 +47,8 @@ public class Serie {
                 ", evaluacion = " + evaluacion +
                 ", poster = '" + poster + '\'' +
                 ", actores = '" + actores + '\'' +
-                ", sinopsis = '" + sinopsis + '\'' +
-                ", episodios = '" + episodios + '\'';
+                ", sinopsis = '" + sinopsis + '\'';
+//                ", episodios = '" + episodios + '\'';
     }
 
     public List<Episodio> getEpisodios() {

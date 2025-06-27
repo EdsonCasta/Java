@@ -20,14 +20,15 @@ public class Principal {
         private  final String API_KEY = "&apikey=2d783b4f";
 
         private ConvierteDatos conversor = new ConvierteDatos();
-        private final ConsultaGemini consultaGemini;
+//        private final ConsultaGemini consultaGemini;
         private final SerieRepository repository;
 
-        private List<Serie> series = new ArrayList<>();
-        private List<DatosSerie> datosSeries = new ArrayList<>();
+        private List<Serie> series;
+        private List<DatosSerie> datosSeries;
+        private Optional<Serie> serieBuscada;
 
-    public Principal(ConsultaGemini consultaGemini, SerieRepository repository) {
-        this.consultaGemini = consultaGemini;
+    public Principal(SerieRepository repository) {
+//        this.consultaGemini = consultaGemini;
         this.repository = repository;
     }
 
@@ -44,6 +45,7 @@ public class Principal {
                     6 - Buscar serie por categoria
                     7 - Filtrar series
                     8 - Buscar episodios por titulo
+                    9 - Top 5 episodios por serie
                     
                     0 - Salir
                     """;
@@ -76,6 +78,9 @@ public class Principal {
                 case 8:
                     buscarEpisodiosPorTitulo();
                     break;
+                case 9:
+                    busquedaTop5Episodios();
+                    break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
                     break;
@@ -86,12 +91,34 @@ public class Principal {
 
     }
 
+    private void busquedaTop5Episodios() {
+        buscarSeriePorTitulo();
+        if (serieBuscada.isPresent()) {
+            Serie serie = serieBuscada.get();
+            List<Episodio> topEpisodios = repository.top5Eposodios(serie);
+
+            topEpisodios = topEpisodios.stream()
+                    .limit(5)
+                    .collect(Collectors.toList());
+
+            if (topEpisodios.isEmpty()) {
+                System.out.println("No hay episodios registrados para esta serie.");
+                return;
+            }
+            System.out.println("*** Top 5 episodios ***");
+            topEpisodios.forEach(e ->
+                    System.out.printf("Serie: %s | Título: %s | Temporada: %d | Episodio: %d | Evaluación: %.1f\n",
+                            e.getSerie().getTitulo(), e.getTitulo(), e.getTemporada(), e.getNumeroEpisodio(), e.getEvaluacion()));
+        }
+    }
+
     private void buscarEpisodiosPorTitulo() {
         System.out.println("Escribe el nombre del episodio que deseas buscar: ");
         var nombreEpisodio = scanner.nextLine();
         List<Episodio> episodiosEncontrados = repository.episodiosPorNombre(nombreEpisodio);
         episodiosEncontrados.forEach(e ->
-                System.out.printf("Serie: %s Temporada %s Episodio %s Evaluación %s\n", e.getSerie(), e.getTemporada(), e.getNumeroEpisodio(), e.getEvaluacion()));
+                System.out.printf("Serie: %s Temporada %s Episodio %s Evaluación %s\n",
+                        e.getSerie(), e.getTemporada(), e.getNumeroEpisodio(), e.getEvaluacion()));
     }
 
     private void filtrarSeriesPorTemporadaYEvalucion() {
@@ -126,7 +153,7 @@ public class Principal {
         System.out.println("Escribe el nombre de la serie que deseas buscar: ");
         var nombreSerie = scanner.nextLine();
 
-        Optional<Serie> serieBuscada = repository.findByTituloContainsIgnoreCase(nombreSerie);
+        serieBuscada = repository.findByTituloContainsIgnoreCase(nombreSerie);
 
         if (serieBuscada.isPresent()) {
             System.out.println("La serie buscada es: " + serieBuscada.get());
@@ -175,7 +202,7 @@ public class Principal {
     private void buscarSerieWeb() {
         DatosSerie datos = getDatosSerie();
 //        datosSeries.add(datos);
-        Serie serie = new Serie(datos, consultaGemini);
+        Serie serie = new Serie(datos);
         repository.save(serie);
         System.out.println("Serie guardada en la base de datos: ");
         System.out.println(serie);
