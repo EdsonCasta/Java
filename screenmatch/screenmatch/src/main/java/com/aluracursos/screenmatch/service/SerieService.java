@@ -30,4 +30,8 @@ public class SerieService {
                         s.getActores(), s.getSinopsis()))
                 .collect(Collectors.toList());
     }
+
+    public List<SerieDTO> obtenerLanzamientosMasReciente(){
+        return convierteDatos(repository.lanzamientosMasRecientes());
+    }
 }
