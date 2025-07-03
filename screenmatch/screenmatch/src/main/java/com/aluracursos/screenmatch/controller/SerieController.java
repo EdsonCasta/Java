@@ -21,27 +21,33 @@ public class SerieController {
     private SerieService service;
 
     @GetMapping()
-    public List<SerieDTO> obtenerTodasLasSeries(){
+    public List<SerieDTO> obtenerTodasLasSeries() {
         return service.obtenerTodasLasSeries();
     }
 
     @GetMapping("/top5")
-    public List<SerieDTO> obtenerTop5(){
+    public List<SerieDTO> obtenerTop5() {
         return service.obtenerTop5();
     }
 
     @GetMapping("/lanzamientos")
-    public List<SerieDTO> obtenerLanzamientosMasRecientes(){
+    public List<SerieDTO> obtenerLanzamientosMasRecientes() {
         return service.obtenerLanzamientosMasReciente();
     }
 
     @GetMapping("/{id}")
-    public SerieDTO obtenerPorId(@PathVariable Long id){
+    public SerieDTO obtenerPorId(@PathVariable Long id) {
         return service.obtenerPorId(id);
     }
 
     @GetMapping("/{id}/temporadas/todas")
-    public List<EpisodioDTO> obtenerTodasLasTemporadas(@PathVariable Long id){
+    public List<EpisodioDTO> obtenerTodasLasTemporadas(@PathVariable Long id) {
         return service.obtenerTodasLasTemporadas(id);
+    }
+
+    @GetMapping("/{id}/temporadas/{numeroTemporada}")
+    public List<EpisodioDTO> obtenerTemporadasPorNumero(@PathVariable Long id,
+                                                        @PathVariable Long numeroTemporada){
+        return service.obtenerTemporadasPorNumero(id, numeroTemporada);
     }
 }
